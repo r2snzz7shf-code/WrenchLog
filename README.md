@@ -1,4 +1,4 @@
-# WrenchLogWrenchLog starter
+# WrenchLog starter
 
 A mobile-friendly car garage, maintenance log, build sheet, and expense tracker prototype.
 
@@ -21,7 +21,7 @@ Open `index.html` in a browser.
 ## Publish free with GitHub Pages
 1. Sign in to GitHub and create a new repository, for example `wrenchlog`.
 2. Upload `index.html` and `README.md` from this folder to the repository root.
-3. In the repository, open **Settings â Pages**.
+3. In the repository, open **Settings → Pages**.
 4. Under build/deployment, choose **Deploy from a branch**.
 5. Select the `main` branch and `/ (root)`, then save.
 6. Wait for the deployment to finish. GitHub will show the site URL in the Pages section.

@@ -109,7 +109,47 @@
   const money = n => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(Number(n)||0);
   const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   function loadData(){ try { const d=JSON.parse(localStorage.getItem(KEY)); if(d && Array.isArray(d.cars)) return d; } catch(e){} return {cars:[]}; }
-  function save(){ localStorage.setItem(KEY,JSON.stringify(data)); render(); }
+  function save() {
+    try {
+        // Check that data exists
+        if (typeof data === "undefined" || data === null) {
+            throw new Error("No data available to save.");
+        }
+
+        // Convert all JSON-compatible app data into a string
+        const savedData = JSON.stringify(data);
+
+        if (savedData === undefined) {
+            throw new Error("Data could not be serialized.");
+        }
+
+        // Save data to browser storage
+        localStorage.setItem(KEY, savedData);
+
+        // Verify the saved data matches
+        if (localStorage.getItem(KEY) !== savedData) {
+            throw new Error("Saved data verification failed.");
+        }
+
+        console.log("All app data saved successfully!");
+
+        // Update the app display
+        render();
+
+        return true;
+
+    } catch (error) {
+        console.error("Error saving app data:", error);
+
+        alert(
+            "Warning: Your data could not be saved. " +
+            "Please do not close or refresh the app. " +
+            "Error: " + error.message
+        );
+
+        return false;
+    }
+}
   function id(){ return (crypto.randomUUID ? crypto.randomUUID() : Date.now()+"-"+Math.random().toString(16).slice(2)); }
   function car(){ return data.cars.find(c=>c.id===selectedCarId); }
   function records(c){ return c.records || []; }
